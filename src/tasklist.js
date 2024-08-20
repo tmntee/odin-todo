@@ -1,10 +1,11 @@
 class TaskList {
-    constructor(name) {
-        this.name = name;
+    #idTracker;
+
+    constructor(title) {
+        this.title = title;
         this.tasks = [];
+        this.#idTracker = 0;
     }
-    
-    #idTracker = 0;
 
     addTask = (task) => {
         task.id = this.#idTracker;
@@ -12,6 +13,11 @@ class TaskList {
 
         this.tasks.push(task);
         console.log(this.tasks);
+    }
+
+    removeTask = (task) => {
+        let taskBeingDeleted = this.tasks.find((element) => { element.id === task.id});
+        this.tasks.splice(this.tasks.indexOf(taskBeingDeleted));
     }
 }
 
