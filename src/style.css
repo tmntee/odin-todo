@@ -1,12 +1,41 @@
 * {
     --periwinkle: #C9C9EE;
+    --rosequartz: #BAABBD;
+    --mountbattenpink: #9F838C;
+    --celadon: #A6D3A0;
     --teagreen: #d1ffd7;
+
+    padding: 0;
+    margin: 0;
+    box-sizing:border-box;
 }
 
 body {
     background-color: var(--periwinkle);
 }
 
+div.header {
+    height: 5vh;
+}
+
+div.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+}
+
+div.nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 4em;
+}
+
 div.to-do {
     background-color: var(--teagreen);
+    width: min(1500px, 100%);
+    height: min(800px, 100%);
+
+    display: grid;
+    grid-template-columns: 1fr 4fr;
 }
