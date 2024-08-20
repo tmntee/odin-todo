@@ -1,0 +1,12 @@
+* {
+    --periwinkle: #C9C9EE;
+    --teagreen: #d1ffd7;
+}
+
+body {
+    background-color: var(--periwinkle);
+}
+
+div.to-do {
+    background-color: var(--teagreen);
+}
