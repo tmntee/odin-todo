@@ -6,45 +6,116 @@ class ListDisplay {
         let taskElement = document.createElement("div");
         taskElement.classList.add("task");
 
+        let taskActions = document.createElement("div");
+        taskActions.classList.add("task-actions");
+
+        let pinBtn = document.createElement("button");
+        pinBtn.classList.add("action-btn");
+        let pinBtnIcon = document.createElement("img");
+        pinBtnIcon.setAttribute("src","");
+        pinBtn.appendChild(pinBtnIcon);
+        taskActions.appendChild(pinBtn);
+
+        let editBtn = document.createElement("button");
+        editBtn.classList.add("action-btn");
+        let editBtnIcon = document.createElement("img");
+        editBtnIcon.setAttribute("src","");
+        taskActions.appendChild(editBtn);
+
+        let deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("action-btn");
+        let deleteBtnIcon = document.createElement("img");
+        deleteBtnIcon.setAttribute("src","");
+        taskActions.appendChild(deleteBtn);
+
+        taskElement.appendChild(taskActions);
+
+        let taskInfo = document.createElement("div");
+        taskInfo.classList.add("task-info");
+
+        let taskHeader = document.createElement("div");
+        taskHeader.classList.add("task-header");
+
+        let taskHeader1 = document.createElement("div");
+        taskHeader1.classList.add("task-header");
+
+        let checkbox = document.createElement("button");
+        checkbox.classList.add("check-box");
+
         let taskTitle = document.createElement("h1");
+        taskTitle.classList.add("task-title");
         taskTitle.textContent = task.title;
-        taskElement.appendChild(taskTitle);
 
-        let taskDescription = document.createElement("p");
-        taskDescription.textContent = task.description;
-        taskElement.appendChild(taskDescription);
+        let descToggle = document.createElement("button");
+        descToggle.classList.add("desc-toggle");
+        descToggle.textContent = "V";
 
-        let taskDueDate = document.createElement("p");
-        taskDueDate.textContent = task.dueDate;
-        taskElement.appendChild(taskDueDate);
+        taskHeader1.appendChild(checkbox);
+        taskHeader1.appendChild(taskTitle);
+        taskHeader1.appendChild(descToggle);
 
-        let taskPriority = document.createElement("div");
+        taskHeader.appendChild(taskHeader1);
+
+        let taskHeader2 = document.createElement("div");
+        taskHeader2.classList.add("task-header");
+
+        let priority = document.createElement("p");
+        priority.classList.add("priority");
         switch (task.priority) {
             case 0: 
-                taskPriority.style.backgroundColor = "red";
+                priority.textContent = "";
                 break;
-            
+
             case 1:
-                taskPriority.style.backgroundColor = "yellow";
+                priority.textContent = "!";
+                break;
 
-            case 2:
-                taskPriority.style.backgroundColor = "green";
+            case 2: 
+                priority.textContent = "!!";
+                break;
+
+            case 3:
+                priority.textContent = "!!!";
+
         }
-        taskPriority.textContent = "  . ";
-        taskElement.appendChild(taskPriority);
 
-        let taskNotes = document.createElement("p");
-        taskNotes.textContent = task.notes;
-        taskElement.appendChild(taskNotes);
+        let date = document.createElement("h1");
+        date.textContent = task.dueDate;
+
+        let notebookName = document.createElement("p");
+        notebookName.classList.add("notebook-name");
+        notebookName.textContent = task.notebook;
+
+        taskHeader2.appendChild(priority);
+        taskHeader2.appendChild(date);
+        taskHeader2.appendChild(notebookName);
+
+        taskHeader.appendChild(taskHeader2);
+
+        taskInfo.appendChild(taskHeader);
+
+        let taskDescription = document.createElement("div");
+        taskDescription.classList.add("task-desc");
+        taskDescription.textContent = task.description;
+
+        taskInfo.appendChild(taskDescription);
+
+        taskElement.appendChild(taskInfo);
 
         return taskElement;
     }
+
+    assignTasklist(tasklist) {
+        this.#currentListBeingDisplayed = tasklist;
+    }
     
-    displayTaskList(tasklist) {
+    displayCurrentTasklist() {
         this.clearDisplay();
-        tasklist.tasks.forEach((task) => {
+        this.#currentListBeingDisplayed.tasks.forEach((task) => {
             this.tasklistDiv.appendChild(this.createTaskElement(task));
         })
+
+        console.log("am i working");
     }
 
     clearDisplay() {
