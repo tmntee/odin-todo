@@ -1,51 +1,59 @@
 * {
-    --periwinkle: #C9C9EE;
-    --rosequartz: #BAABBD;
-    --mountbattenpink: #9F838C;
-    --celadon: #A6D3A0;
-    --teagreen: #d1ffd7;
-
     padding: 0;
     margin: 0;
     box-sizing:border-box;
 }
 
 body {
-    background-color: var(--periwinkle);
+    background-color: white;
+    height: 100vh;
+    width: 100%;
 }
 
 div.header {
-    height: 5vh;
+    background-color: gray;
+    height: 8%;
 }
 
 div.content {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 95vh;
+    height: 92%;
 }
 
 div.nav {
+    background-color: gray;
     display: flex;
     flex-direction: column;
-    padding: 1em 4em;
+
+    width: max(15%, 100px);
 }
 
-div.to-do {
-    background-color: var(--teagreen);
-    width: min(1500px, 100%);
-    height: min(800px, 100%);
+div.task-nav, div.notebook-nav {
+    display: flex;
+    flex-direction: column;
+}
 
+div.task-wrapper {
+    border-top-left-radius: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.note-page {
+    background-color: lightblue;
+    width: max(50%, 200px);
+    height: min(100%, 1000px);
+
+}
+
+div.task {
     display: grid;
-    grid-template-columns: 1fr 4fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 3fr;
 }
 
-div.projects {
-    grid-column: 1 / 2;
-}
-
-div.tasklist {
-    grid-row: 1 / 3;
-    grid-column: 2 / 3 ;
+div.task-header {
+    display: flex;
+    justify-content: space-between;
 }

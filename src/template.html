@@ -7,22 +7,47 @@
 </head>
 <body>
     <div class="header">
-        <h1>to-do</h1>
+        <h1>tasknote</h1>
     </div>
     <div class="content">
-        <div class="to-do">
-            <div class="nav">
-                <button>Home</button>
-                <button>Today</button>
-                <button>This Week</button>
-                <button>Starred</button>
+        <div class="nav">
+            <div class="task-nav">
+                <button>today</button>
+                <button>upcoming</button>
+                <button>all</button>
+                <button>overdue</button>  
             </div>
-            <div class="projects nav">
-                <h1>My Projects</h1>
-                <button>New Project</button>
+            <div class="notebook-nav">
+                <h1>my notebooks</h1>
+                <button>default</button>
+                <button>add notebook</button>
             </div>
-            <div class="tasklist">
-                hi im a tasklist
+        </div>
+        <div class="task-wrapper">
+            <div class="note-page">
+                <div class="tasklist">
+                    <div class="task">
+                        <div class="task-actions">
+                            <button class="action-btn">pin</button>
+                            <button class="action-btn">edit</button>
+                            <button class="action-btn">delete</button>
+                        </div>
+                        <div class="task-info">
+                            <div class="task-header">
+                                <div class="task-header task-title">
+                                    <button>O</button>
+                                    <h1>task title</h1>
+                                    <button class="desc-toggle">V</button>  
+                                </div>
+                                <div class="task-header due-date">
+                                    <p class="priority">!!!</p>
+                                    <h1>date</h1>
+                                <div class="task-desc"> 
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
