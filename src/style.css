@@ -63,3 +63,7 @@ div.task-header {
     display: flex;
     justify-content: space-between;
 }
+
+.hiding {
+    display: none;
+}

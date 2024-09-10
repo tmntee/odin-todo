@@ -7,6 +7,7 @@ class Task {
         this.notebook = notebook;
         this.completed = false;
         this.showDescription = false;
+        this.pinned = false;
     }
     id = undefined;
 }

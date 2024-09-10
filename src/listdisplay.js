@@ -11,6 +11,7 @@ class ListDisplay {
 
         let pinBtn = document.createElement("button");
         pinBtn.classList.add("action-btn");
+        pinBtn.textContent = "pin";
         let pinBtnIcon = document.createElement("img");
         pinBtnIcon.setAttribute("src","");
         pinBtn.appendChild(pinBtnIcon);
@@ -18,12 +19,14 @@ class ListDisplay {
 
         let editBtn = document.createElement("button");
         editBtn.classList.add("action-btn");
+        editBtn.textContent = "edit";
         let editBtnIcon = document.createElement("img");
         editBtnIcon.setAttribute("src","");
         taskActions.appendChild(editBtn);
 
         let deleteBtn = document.createElement("button");
         deleteBtn.classList.add("action-btn");
+        deleteBtn.textContent = "delete";
         let deleteBtnIcon = document.createElement("img");
         deleteBtnIcon.setAttribute("src","");
         taskActions.appendChild(deleteBtn);
@@ -49,6 +52,17 @@ class ListDisplay {
         let descToggle = document.createElement("button");
         descToggle.classList.add("desc-toggle");
         descToggle.textContent = "V";
+
+        descToggle.addEventListener("click", () => {
+            if(task.showDescription === false) {
+                taskDescription.classList.remove("hiding");
+                task.showDescription = true;
+            } else {
+                taskDescription.classList.add("hiding");
+                task.showDescription = false;
+            }
+        })
+
 
         taskHeader1.appendChild(checkbox);
         taskHeader1.appendChild(taskTitle);
@@ -97,6 +111,9 @@ class ListDisplay {
         let taskDescription = document.createElement("div");
         taskDescription.classList.add("task-desc");
         taskDescription.textContent = task.description;
+        if (task.showDescription === false) {
+            taskDescription.classList.add("hiding");
+        }
 
         taskInfo.appendChild(taskDescription);
 
