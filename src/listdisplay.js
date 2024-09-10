@@ -29,6 +29,10 @@ class ListDisplay {
         let deleteBtn = document.createElement("button");
         deleteBtn.classList.add("action-btn");
         deleteBtn.textContent = "delete";
+        deleteBtn.addEventListener("click", () => {
+            this.#currentListBeingDisplayed.removeTask(task);
+            this.displayCurrentTasklist();
+        })
         let deleteBtnIcon = document.createElement("img");
         deleteBtnIcon.setAttribute("src","");
         taskActions.appendChild(deleteBtn);
