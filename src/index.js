@@ -10,6 +10,9 @@ todayTaskList.addTask(shoesTask);
 let chapstickTask = new Task("buy chapstick", "vaseline", "today", 0, todayTaskList.title);
 todayTaskList.addTask(chapstickTask);
 
+let bombaclaat = new Task("bombaclaat", "idk", "today", 3, todayTaskList.title);
+todayTaskList.addTask(bombaclaat);
+
 let TaskListDisplayer = new ListDisplay();
 TaskListDisplayer.assignTasklist(todayTaskList);
 

@@ -114,7 +114,9 @@ class ListDisplay {
         this.#currentListBeingDisplayed.tasks.forEach((task) => {
             this.tasklistDiv.appendChild(this.createTaskElement(task));
         })
-
+        let addTaskButton = document.createElement("button");
+        addTaskButton.textContent = "add task";
+        this.tasklistDiv.appendChild(addTaskButton);
         console.log("am i working");
     }
 
