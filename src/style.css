@@ -67,3 +67,7 @@ div.task-header {
 .hiding {
     display: none;
 }
+
+.overdue {
+    color: rgb(160, 11, 11);
+}

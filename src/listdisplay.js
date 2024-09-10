@@ -1,3 +1,5 @@
+import { format, isPast, formatDistanceToNow } from "date-fns";
+
 class ListDisplay {
     tasklistDiv = document.querySelector("div.tasklist");
     #currentListBeingDisplayed;
@@ -94,7 +96,13 @@ class ListDisplay {
         }
 
         let date = document.createElement("h1");
-        date.textContent = task.dueDate;
+        if (isPast(task.dueDate)) {
+            date.textContent = formatDistanceToNow(task.dueDate, {addSuffix: true});
+            date.classList.add("overdue");
+        } else {
+            date.textContent = format(task.dueDate, "MMM dd, yyyy");
+        }
+       
 
         let notebookName = document.createElement("p");
         notebookName.classList.add("notebook-name");
