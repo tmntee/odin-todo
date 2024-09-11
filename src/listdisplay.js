@@ -1,8 +1,13 @@
 import { format, isPast, formatDistanceToNow } from "date-fns";
+import editicon from './edit_icon.png';
+import pinicon from './pin_icon.png';
+import trashicon from './trash_icon.png';
+import descicon from './desc_icon.png';
 
 class ListDisplay {
     tasklistDiv = document.querySelector("div.tasklist");
     #currentListBeingDisplayed;
+    #TASK_ACTION_HEIGHT = 30;
 
     createTaskElement(task) {
         let taskElement = document.createElement("div");
@@ -13,28 +18,30 @@ class ListDisplay {
 
         let pinBtn = document.createElement("button");
         pinBtn.classList.add("action-btn");
-        pinBtn.textContent = "pin";
-        let pinBtnIcon = document.createElement("img");
-        pinBtnIcon.setAttribute("src","");
-        pinBtn.appendChild(pinBtnIcon);
+        const pinIcon = new Image();
+        pinIcon.height = this.#TASK_ACTION_HEIGHT;
+        pinIcon.src = pinicon;
+        pinBtn.appendChild(pinIcon)
         taskActions.appendChild(pinBtn);
 
         let editBtn = document.createElement("button");
         editBtn.classList.add("action-btn");
-        editBtn.textContent = "edit";
-        let editBtnIcon = document.createElement("img");
-        editBtnIcon.setAttribute("src","");
+        const editIcon = new Image();
+        editIcon.height = this.#TASK_ACTION_HEIGHT;
+        editIcon.src = editicon;
+        editBtn.appendChild(editIcon);
         taskActions.appendChild(editBtn);
 
         let deleteBtn = document.createElement("button");
         deleteBtn.classList.add("action-btn");
-        deleteBtn.textContent = "delete";
+        const deleteIcon = new Image();
+        deleteIcon.height = this.#TASK_ACTION_HEIGHT;
+        deleteIcon.src = trashicon;
+        deleteBtn.appendChild(deleteIcon);
         deleteBtn.addEventListener("click", () => {
             this.#currentListBeingDisplayed.removeTask(task);
             this.displayCurrentTasklist();
         })
-        let deleteBtnIcon = document.createElement("img");
-        deleteBtnIcon.setAttribute("src","");
         taskActions.appendChild(deleteBtn);
 
         taskElement.appendChild(taskActions);
@@ -57,7 +64,10 @@ class ListDisplay {
 
         let descToggle = document.createElement("button");
         descToggle.classList.add("desc-toggle");
-        descToggle.textContent = "V";
+        const descIcon = new Image();
+        descIcon.height = 15;
+        descIcon.src = descicon;
+        descToggle.appendChild(descIcon);
 
         descToggle.addEventListener("click", () => {
             if(task.showDescription === false) {
@@ -68,7 +78,6 @@ class ListDisplay {
                 task.showDescription = false;
             }
         })
-
 
         taskHeader1.appendChild(checkbox);
         taskHeader1.appendChild(taskTitle);
