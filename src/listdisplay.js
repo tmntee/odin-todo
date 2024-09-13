@@ -3,6 +3,7 @@ import editicon from './edit_icon.png';
 import pinicon from './pin_icon.png';
 import trashicon from './trash_icon.png';
 import descicon from './desc_icon.png';
+import checkicon from './check_icon.png';
 
 class ListDisplay {
     tasklistDiv = document.querySelector("div.tasklist");
@@ -16,22 +17,6 @@ class ListDisplay {
         let taskActions = document.createElement("div");
         taskActions.classList.add("task-actions");
 
-        let pinBtn = document.createElement("button");
-        pinBtn.classList.add("action-btn");
-        const pinIcon = new Image();
-        pinIcon.height = this.#TASK_ACTION_HEIGHT;
-        pinIcon.src = pinicon;
-        pinBtn.appendChild(pinIcon)
-        taskActions.appendChild(pinBtn);
-
-        let editBtn = document.createElement("button");
-        editBtn.classList.add("action-btn");
-        const editIcon = new Image();
-        editIcon.height = this.#TASK_ACTION_HEIGHT;
-        editIcon.src = editicon;
-        editBtn.appendChild(editIcon);
-        taskActions.appendChild(editBtn);
-
         let deleteBtn = document.createElement("button");
         deleteBtn.classList.add("action-btn");
         const deleteIcon = new Image();
@@ -43,6 +28,22 @@ class ListDisplay {
             this.displayCurrentTasklist();
         })
         taskActions.appendChild(deleteBtn);
+
+        let editBtn = document.createElement("button");
+        editBtn.classList.add("action-btn");
+        const editIcon = new Image();
+        editIcon.height = this.#TASK_ACTION_HEIGHT;
+        editIcon.src = editicon;
+        editBtn.appendChild(editIcon);
+        taskActions.appendChild(editBtn);
+
+        let pinBtn = document.createElement("button");
+        pinBtn.classList.add("action-btn");
+        const pinIcon = new Image();
+        pinIcon.height = this.#TASK_ACTION_HEIGHT;
+        pinIcon.src = pinicon;
+        pinBtn.appendChild(pinIcon)
+        taskActions.appendChild(pinBtn);
 
         taskElement.appendChild(taskActions);
 
@@ -57,6 +58,21 @@ class ListDisplay {
 
         let checkbox = document.createElement("button");
         checkbox.classList.add("check-box");
+        checkbox.height = this.#TASK_ACTION_HEIGHT;
+        let checkIcon = new Image();
+        checkbox.appendChild(checkIcon);
+        checkbox.addEventListener('click', () => {
+            if (task.completed === false) {
+                task.completed = true;
+                taskHeader.classList.add("completed");
+                checkIcon.src = checkicon;
+                checkIcon.height = this.#TASK_ACTION_HEIGHT;
+            } else {
+                task.completed = false;
+                taskHeader.classList.remove("completed");
+                checkIcon.removeAttribute("src");
+            }
+        })
 
         let taskTitle = document.createElement("h1");
         taskTitle.classList.add("task-title");

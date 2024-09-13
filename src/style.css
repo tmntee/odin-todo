@@ -59,9 +59,29 @@ div.task {
     grid-template-columns: 1fr 3fr;
 }
 
+div.task-actions {
+    display: flex;
+    justify-content: center;
+}
+
 div.task-header {
     display: flex;
     justify-content: space-between;
+    
+}
+
+.check-box {
+    width: 34px;
+    height: 37px;
+
+    background-color: lightblue;
+    border: ridge black 4px;
+}
+
+.completed {
+    text-decoration: line-through;
+    text-decoration-color: currentColor;
+    color: gray;
 }
 
 .hiding {
@@ -69,5 +89,5 @@ div.task-header {
 }
 
 .overdue {
-    color: rgb(160, 11, 11);
+    color: rgb(185, 33, 33);
 }
