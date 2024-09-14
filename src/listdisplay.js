@@ -54,7 +54,7 @@ class ListDisplay {
         taskHeader.classList.add("task-header");
 
         let taskHeader1 = document.createElement("div");
-        taskHeader1.classList.add("task-header");
+        taskHeader1.classList.add("task-title");
 
         let checkbox = document.createElement("button");
         checkbox.classList.add("check-box");
@@ -64,12 +64,12 @@ class ListDisplay {
         checkbox.addEventListener('click', () => {
             if (task.completed === false) {
                 task.completed = true;
-                taskHeader.classList.add("completed");
+                taskHeader1.classList.add("completed");
                 checkIcon.src = checkicon;
                 checkIcon.height = this.#TASK_ACTION_HEIGHT;
             } else {
                 task.completed = false;
-                taskHeader.classList.remove("completed");
+                taskHeader1.classList.remove("completed");
                 checkIcon.removeAttribute("src");
             }
         })
@@ -95,14 +95,14 @@ class ListDisplay {
             }
         })
 
-        taskHeader1.appendChild(checkbox);
+        taskHeader.appendChild(checkbox);
         taskHeader1.appendChild(taskTitle);
         taskHeader1.appendChild(descToggle);
 
         taskHeader.appendChild(taskHeader1);
 
         let taskHeader2 = document.createElement("div");
-        taskHeader2.classList.add("task-header");
+        taskHeader2.classList.add("due-date");
 
         let priority = document.createElement("p");
         priority.classList.add("priority");

@@ -62,16 +62,56 @@ div.task {
 div.task-actions {
     display: flex;
     justify-content: center;
+    height: 37px;
+    align-self: center;
+}
+
+button.action-btn {
+    border: ridge rgb(40, 102, 153) 4px;
+    border-radius: 70%;
+    margin: 0 0.5em;
+    min-width: 37px;
+    min-height: 37px;
+    background-image: radial-gradient(circle, rgb(27, 51, 70), rgb(40, 102, 153),white);
+    box-shadow: rgb(27, 51, 70) 2px 2px 5px;
+}
+
+button.action-btn:hover {
+    border: ridge gray 4px;
+    background-image: radial-gradient(circle, rgb(58, 57, 57), gray,white);
 }
 
 div.task-header {
     display: flex;
-    justify-content: space-between;
-    
+    flex-shrink: 0;
+    align-items: center;
+    width: 100%;
+}
+
+div.task-title {
+    display: flex;
+    align-items: center;
+    flex: 0;
+    gap: 5px;
+}
+
+button.desc-toggle {
+    background-color: none;
+}
+
+h1.task-title {
+    width: max-content;
+    max-width: 35vh;
+    overflow: auto;
+    overflow-wrap: break-all;
+}
+
+div.due-date {
+    display: flex;
 }
 
 .check-box {
-    width: 34px;
+    width: 37px;
     height: 37px;
 
     background-color: lightblue;
