@@ -7,6 +7,7 @@ import checkicon from './check_icon.png';
 
 class ListDisplay {
     tasklistDiv = document.querySelector("div.tasklist");
+    pinnedTasklistDiv = document.querySelector("div.pinned-tasklist");
     #currentListBeingDisplayed;
     #TASK_ACTION_HEIGHT = 30;
 
@@ -42,7 +43,18 @@ class ListDisplay {
         const pinIcon = new Image();
         pinIcon.height = this.#TASK_ACTION_HEIGHT;
         pinIcon.src = pinicon;
-        pinBtn.appendChild(pinIcon)
+        pinBtn.appendChild(pinIcon);
+        if (task.getPinned() === true) {
+            pinBtn.classList.add("pinned");
+        }
+        pinBtn.addEventListener('click', () => {
+            if(task.getPinned() === true) {
+                task.setPinned(false);
+            } else {
+                task.setPinned(true);
+            }
+            this.displayCurrentTasklist();
+        });
         taskActions.appendChild(pinBtn);
 
         taskElement.appendChild(taskActions);
@@ -172,7 +184,10 @@ class ListDisplay {
         let completedTasks = [];
 
         this.#currentListBeingDisplayed.tasks.forEach((task) => {
-            if (task.getCompleted === true) {
+            if (task.getPinned() === true) {
+                this.pinnedTasklistDiv.appendChild(this.createTaskElement(task));
+            }
+            else if (task.getCompleted() === true) {
                 completedTasks.push(task);
             } else {
                 this.tasklistDiv.appendChild(this.createTaskElement(task));
@@ -188,14 +203,16 @@ class ListDisplay {
         let addTaskButton = document.createElement("button");
         addTaskButton.textContent = "add task";
         this.tasklistDiv.appendChild(addTaskButton);
-        console.log("am i working");
     }
 
     clearDisplay() {
+        while(this.pinnedTasklistDiv.firstChild) {
+            this.pinnedTasklistDiv.removeChild(this.pinnedTasklistDiv.firstChild);
+        }
         while(this.tasklistDiv.firstChild) {
             this.tasklistDiv.removeChild(this.tasklistDiv.firstChild);
-            console.log("clearing");
         }
+        console.log("clearing");
     }
 }
 

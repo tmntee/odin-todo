@@ -81,6 +81,16 @@ button.action-btn:hover {
     background-image: radial-gradient(circle, rgb(58, 57, 57), gray,white);
 }
 
+button.action-btn:active {
+    border: ridge rgb(77, 77, 77) 4px;
+    background-image: radial-gradient(circle, rgb(34, 34, 34), rgb(77, 77, 77),white);
+}
+
+.action-btn.pinned {
+    border: ridge rgb(47, 159, 250) 4px;
+    background-image: radial-gradient(circle, rgb(32, 123, 197), rgb(47, 159, 250),white);
+}
+
 div.task-header {
     display: flex;
     flex-shrink: 0;

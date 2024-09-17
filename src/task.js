@@ -26,6 +26,14 @@ class Task {
     setShowDesc = (bool) => {
         this.showDescription = bool;
     }
+
+    getPinned = () => {
+        return this.pinned;
+    }
+
+    setPinned = (bool) => {
+        this.pinned = bool;
+    }
 }
 
 export { Task };
