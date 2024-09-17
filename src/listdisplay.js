@@ -55,23 +55,27 @@ class ListDisplay {
 
         let taskHeader1 = document.createElement("div");
         taskHeader1.classList.add("task-title");
+        if (task.completed) {
+            taskHeader1.classList.add("completed");
+        }
 
         let checkbox = document.createElement("button");
         checkbox.classList.add("check-box");
         checkbox.height = this.#TASK_ACTION_HEIGHT;
         let checkIcon = new Image();
         checkbox.appendChild(checkIcon);
+        if (task.completed) {
+            checkbox.classList.add("completed");
+            checkIcon.src = checkicon;
+            checkIcon.height = this.#TASK_ACTION_HEIGHT;
+        }
         checkbox.addEventListener('click', () => {
             if (task.completed === false) {
                 task.completed = true;
-                taskHeader1.classList.add("completed");
-                checkIcon.src = checkicon;
-                checkIcon.height = this.#TASK_ACTION_HEIGHT;
             } else {
                 task.completed = false;
-                taskHeader1.classList.remove("completed");
-                checkIcon.removeAttribute("src");
             }
+            this.displayCurrentTasklist();
         })
 
         let taskTitle = document.createElement("h1");
@@ -165,9 +169,22 @@ class ListDisplay {
     
     displayCurrentTasklist() {
         this.clearDisplay();
+        let completedTasks = [];
+
         this.#currentListBeingDisplayed.tasks.forEach((task) => {
+            if (task.completed === true) {
+                completedTasks.push(task);
+            } else {
+                this.tasklistDiv.appendChild(this.createTaskElement(task));
+            }
+        })
+
+        completedTasks.reverse();
+
+        completedTasks.forEach((task) => {
             this.tasklistDiv.appendChild(this.createTaskElement(task));
         })
+
         let addTaskButton = document.createElement("button");
         addTaskButton.textContent = "add task";
         this.tasklistDiv.appendChild(addTaskButton);
