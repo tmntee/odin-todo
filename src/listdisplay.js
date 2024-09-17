@@ -64,16 +64,16 @@ class ListDisplay {
         checkbox.height = this.#TASK_ACTION_HEIGHT;
         let checkIcon = new Image();
         checkbox.appendChild(checkIcon);
-        if (task.completed) {
+        if (task.getCompleted() === true) {
             checkbox.classList.add("completed");
             checkIcon.src = checkicon;
             checkIcon.height = this.#TASK_ACTION_HEIGHT;
         }
         checkbox.addEventListener('click', () => {
-            if (task.completed === false) {
-                task.completed = true;
+            if (task.getCompleted() === false) {
+                task.setCompleted(true);
             } else {
-                task.completed = false;
+                task.setCompleted(false);
             }
             this.displayCurrentTasklist();
         })
@@ -90,12 +90,12 @@ class ListDisplay {
         descToggle.appendChild(descIcon);
 
         descToggle.addEventListener("click", () => {
-            if(task.showDescription === false) {
+            if(task.getShowDesc() === false) {
                 taskDescription.classList.remove("hiding");
-                task.showDescription = true;
+                task.setShowDesc(true);
             } else {
                 taskDescription.classList.add("hiding");
-                task.showDescription = false;
+                task.setShowDesc(false);
             }
         })
 
@@ -172,7 +172,7 @@ class ListDisplay {
         let completedTasks = [];
 
         this.#currentListBeingDisplayed.tasks.forEach((task) => {
-            if (task.completed === true) {
+            if (task.getCompleted === true) {
                 completedTasks.push(task);
             } else {
                 this.tasklistDiv.appendChild(this.createTaskElement(task));
