@@ -157,7 +157,7 @@ textarea#task-notes {
     height: 100px;
 }
 
-.task-form {
+.task-form-input {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr;

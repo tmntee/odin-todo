@@ -6,13 +6,13 @@
     <title>tasknote</title>
 </head>
 <body>
-    <dialog open>
-        <form action="">
+    <dialog>
+        <form action="" class="task-form">
             <div class="form-wrapper" id="TASKFORM">
                 <div class="cancel-button">
                     <button>X</button>
                 </div>
-                <div class="task-form">
+                <div class="task-form-input">
                     <div class="col-1">
                         <label for="task-title">task title:</label>
                         <input type="text" name="task-title" id="task-title">
@@ -32,7 +32,7 @@
                         </select>
 
                         <label for="due-date">due date:</label>
-                        <input type="date">
+                        <input type="date" name="due-date">
 
                         <input type="radio" id="none" name="priority">
                         <label for="none">no priority</label>
@@ -46,7 +46,8 @@
                         <input type="radio" id="high" name="priority">
                         <label for="high">high priority</label>
                         
-                        <button>Create</button>
+                        <input type="submit" value="Submit">
+                        
                     </div>
                 </div>
             </div>

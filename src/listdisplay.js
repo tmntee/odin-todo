@@ -4,6 +4,7 @@ import pinicon from './pin_icon.png';
 import trashicon from './trash_icon.png';
 import descicon from './desc_icon.png';
 import checkicon from './check_icon.png';
+import { TaskForm } from './taskform.js';
 
 class ListDisplay {
     tasklistDiv = document.querySelector("div.tasklist");
@@ -36,6 +37,9 @@ class ListDisplay {
         editIcon.height = this.#TASK_ACTION_HEIGHT;
         editIcon.src = editicon;
         editBtn.appendChild(editIcon);
+        editBtn.addEventListener('click', () => {
+            TaskForm.openFormExistingTask(task);
+        })
         taskActions.appendChild(editBtn);
 
         let pinBtn = document.createElement("button");
@@ -202,6 +206,9 @@ class ListDisplay {
 
         let addTaskButton = document.createElement("button");
         addTaskButton.textContent = "add task";
+        addTaskButton.addEventListener('click', () => {
+            TaskForm.openFormNewTask();
+        });
         this.tasklistDiv.appendChild(addTaskButton);
     }
 
