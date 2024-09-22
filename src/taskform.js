@@ -1,5 +1,5 @@
 import Task from "./task.js";
-import { format } from "date-fns";
+import { parseISO, formatISO } from "date-fns";
 
 class TaskForm {
     static #formdialog = document.querySelector("dialog");
@@ -17,12 +17,42 @@ class TaskForm {
 
     static #submitButtonParent;
 
-    static #submitForm() {
+    static #submitForm(task) {
         console.log("submitting form");
+        
+        const currentSelectedPrior = document.querySelector('input[name=priority]:checked');
+        let priorNumber;
+
+        switch(currentSelectedPrior) {
+            case this.#noPrior:
+                priorNumber = 0;
+                break;
+
+            case this.#lowPrior:
+                priorNumber = 1;
+                break;
+
+            case this.#medPrior:
+                priorNumber = 2;
+                break;
+
+            case this.#highPrior:
+                priorNumber = 3;
+                break;
+        }
+
+        task.setEditableProperties(
+            this.#tasktitle.value, 
+            this.#tasknotes.value, 
+            parseISO(this.#duedate.value), 
+            priorNumber, 
+            this.#tasknotebook.value);
+        this.#formdialog.close();
     }
 
     static #createTask() {
         console.log("creating task");
+        this.#formdialog.close();
     }
 
     static openFormExistingTask(task) {
@@ -31,13 +61,7 @@ class TaskForm {
         this.#tasktitle.value = task.title;
         this.#tasknotes.value = task.description;
         this.#tasknotebook.value = task.notebook;
-
-        let dueDateY = format(task.dueDate, "yyyy");
-        let dueDateM = format(task.dueDate, "MM");
-        let dueDateD = format(task.dueDate, "dd");
-
-        console.log(this.#duedate);
-        this.#duedate.value = `${dueDateY}-${dueDateM}-${dueDateD}`;
+        this.#duedate.value = formatISO(task.dueDate, { representation: 'date'});
 
         switch(task.priority) {
             case 0:
@@ -62,7 +86,7 @@ class TaskForm {
         this.#submitButton.value = "Submit";
         this.#submitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            this.#submitForm();
+            this.#submitForm(task);
         });
 
         this.#submitButtonParent.appendChild(this.#submitButton);
@@ -82,19 +106,13 @@ class TaskForm {
             e.preventDefault();
             this.#createTask();
         });
-
         this.#submitButtonParent.appendChild(this.#submitButton);
 
-        // find a way to hold submit button parent temporarily then delete it 
-        // so you can reassign the newly created submit button to the same parent
-        // without having to track down the parent through dom language
+
 
         // trying to make it possible for the form to display
         // through the add task button
         // make form work whenever you edit a task or create a new one
-
-        // commit once you get the button to display differently
-        // love you bye
     }
 
     static #setupForm() {

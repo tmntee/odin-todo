@@ -5,34 +5,42 @@ class Task {
         this.dueDate = dueDate;
         this.priority = priority;
         this.notebook = notebook;
-        this.completed = false;
-        this.showDescription = false;
-        this.pinned = false;
     }
     id = undefined;
+    #completed = false;
+    #showDescription = false;
+    #pinned = false;
 
     getCompleted = () => {
-        return this.completed;
+        return this.#completed;
     }
 
     setCompleted = (bool) => {
-        this.completed = bool;
+        this.#completed = bool;
     }
 
     getShowDesc = () => {
-        return this.showDescription;
+        return this.#showDescription;
     }
 
     setShowDesc = (bool) => {
-        this.showDescription = bool;
+        this.#showDescription = bool;
     }
 
     getPinned = () => {
-        return this.pinned;
+        return this.#pinned;
     }
 
     setPinned = (bool) => {
-        this.pinned = bool;
+        this.#pinned = bool;
+    }
+
+    setEditableProperties = (title, description, dueDate, priority, notebook) => {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.notebook = notebook;
     }
 }
 
