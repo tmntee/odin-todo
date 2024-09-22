@@ -6,6 +6,52 @@
     <title>tasknote</title>
 </head>
 <body>
+    <dialog open>
+        <form action="">
+            <div class="form-wrapper" id="TASKFORM">
+                <div class="cancel-button">
+                    <button>X</button>
+                </div>
+                <div class="task-form">
+                    <div class="col-1">
+                        <label for="task-title">task title:</label>
+                        <input type="text" name="task-title" id="task-title">
+
+                        <label for="task-notes">notes:</label>
+                        <textarea name="task-notes" id="task-notes"></textarea>
+                    </div>
+                    <div class="col-2">
+                        <label for="task-notebook">task notebook:</label>
+                        <select name="notebook-select" id="task-notebook" form="TASKFORM">
+                           <option value="">Select a notebook</option> 
+                           <option value="hi">hi</option>
+                           <option value="im fake">fake</option>
+                           <option value="notebook">notebook</option>
+                           <option value="dont click me">balls</option>
+                           <option value="jfldskjf">lsakdjfodisja</option>
+                        </select>
+
+                        <label for="due-date">due date:</label>
+                        <input type="date">
+
+                        <input type="radio" id="none" name="priority">
+                        <label for="none">no priority</label>
+                        
+                        <input type="radio" id="low" name="priority">
+                        <label for="low">low priority</label>
+                        
+                        <input type="radio" id="medium" name="priority">
+                        <label for="medium">medium priority</label>
+                        
+                        <input type="radio" id="high" name="priority">
+                        <label for="high">high priority</label>
+                        
+                        <button>Create</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </dialog>
     <div class="header">
         <h1>tasknote</h1>
         <h1>search</h1>
@@ -38,7 +84,7 @@
         <div class="task-wrapper">
             <div class="note-page">
                 <div class="pinned-tasklist">
-                    
+
                 </div>
                 <div class="tasklist">
                     <div class="task">

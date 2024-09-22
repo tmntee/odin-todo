@@ -141,3 +141,34 @@ div.due-date {
 .overdue {
     color: rgb(185, 33, 33);
 }
+
+.cancel-button {
+    display: flex;
+    justify-content: end;
+}
+
+dialog::backdrop {
+    background-color: rgba(128, 128, 128, 0.322)
+}
+
+textarea#task-notes {
+    resize: none;
+    width: 200px;
+    height: 100px;
+}
+
+.task-form {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+}
+
+.col-1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-2 {
+    display: flex;
+    flex-direction: column;
+}
