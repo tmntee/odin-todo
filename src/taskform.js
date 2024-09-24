@@ -141,21 +141,47 @@ class TaskForm {
     }
 
     static #setupForm() {
+        this.#taskform.reset();
+        this.#loadNotebookOpts();
+
         this.#cancelButton.addEventListener('click', (e) => {
             e.preventDefault();
             this.#formdialog.close();
         });
-        console.log(this.#cancelButton);
-
-        let defaultNotebookOpt = document.createElement("option");
-        defaultNotebookOpt.setAttribute("value", "Today");
-        defaultNotebookOpt.textContent = "Today";
-
-        this.#tasknotebook.appendChild(defaultNotebookOpt);
 
         this.#submitButtonParent = this.#submitButton.parentNode;
 
         this.#submitButton.remove();
+    }
+
+    static #clearNotebookOpts() {
+        let optsArray = Array.from(this.#tasknotebook.childNodes);
+
+        while (optsArray > 1) {
+            this.#tasknotebook.removeChild(this.#tasknotebook.lastChild);
+        }
+    }
+
+    static #loadNotebookOpts() {
+        this.#clearNotebookOpts();
+
+        NotebookManager.getNotebookTitles().forEach((title) => {
+            let tempOpt = document.createElement("option");
+            tempOpt.value = title;
+            tempOpt.textContent = title;
+            this.#tasknotebook.appendChild(tempOpt);
+        })
+
+        let optsArray = Array.from(this.#tasknotebook.childNodes);
+        console.log(optsArray);
+
+        let matchingOpt = optsArray.find((node) => {
+            node.value = ListDisplay.getTitleOfCurrentList();
+        })
+
+        if (matchingOpt !== undefined) {
+            matchingOpt.setAttribute("selected");
+        }
     }
 }
 

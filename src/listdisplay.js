@@ -221,6 +221,10 @@ class ListDisplay {
         }
         console.log("clearing");
     }
+
+    static getTitleOfCurrentList() {
+        return this.#currentListBeingDisplayed.title;
+    }
 }
 
 export { ListDisplay };
