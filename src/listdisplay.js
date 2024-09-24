@@ -7,12 +7,12 @@ import checkicon from './check_icon.png';
 import { TaskForm } from './taskform.js';
 
 class ListDisplay {
-    tasklistDiv = document.querySelector("div.tasklist");
-    pinnedTasklistDiv = document.querySelector("div.pinned-tasklist");
-    #currentListBeingDisplayed;
-    #TASK_ACTION_HEIGHT = 30;
+    static tasklistDiv = document.querySelector("div.tasklist");
+    static pinnedTasklistDiv = document.querySelector("div.pinned-tasklist");
+    static #currentListBeingDisplayed;
+    static #TASK_ACTION_HEIGHT = 30;
 
-    createTaskElement(task) {
+    static createTaskElement(task) {
         let taskElement = document.createElement("div");
         taskElement.classList.add("task");
 
@@ -168,7 +168,7 @@ class ListDisplay {
         let taskDescription = document.createElement("div");
         taskDescription.classList.add("task-desc");
         taskDescription.textContent = task.description;
-        if (task.showDescription === false) {
+        if (task.getShowDesc() === false) {
             taskDescription.classList.add("hiding");
         }
 
@@ -179,11 +179,11 @@ class ListDisplay {
         return taskElement;
     }
 
-    assignTasklist(tasklist) {
+    static assignTasklist(tasklist) {
         this.#currentListBeingDisplayed = tasklist;
     }
     
-    displayCurrentTasklist() {
+    static displayCurrentTasklist() {
         this.clearDisplay();
         let completedTasks = [];
 
@@ -212,7 +212,7 @@ class ListDisplay {
         this.tasklistDiv.appendChild(addTaskButton);
     }
 
-    clearDisplay() {
+    static clearDisplay() {
         while(this.pinnedTasklistDiv.firstChild) {
             this.pinnedTasklistDiv.removeChild(this.pinnedTasklistDiv.firstChild);
         }

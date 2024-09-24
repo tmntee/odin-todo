@@ -15,35 +15,30 @@
                 <div class="task-form-input">
                     <div class="col-1">
                         <label for="task-title">task title:</label>
-                        <input type="text" name="task-title" id="task-title">
+                        <input type="text" name="task-title" id="task-title" required>
 
                         <label for="task-notes">notes:</label>
                         <textarea name="task-notes" id="task-notes"></textarea>
                     </div>
                     <div class="col-2">
                         <label for="task-notebook">task notebook:</label>
-                        <select name="notebook-select" id="task-notebook" form="TASKFORM">
+                        <select required name="notebook-select" id="task-notebook" form="TASKFORM">
                            <option value="">Select a notebook</option> 
-                           <option value="hi">hi</option>
-                           <option value="im fake">fake</option>
-                           <option value="notebook">notebook</option>
-                           <option value="dont click me">balls</option>
-                           <option value="jfldskjf">lsakdjfodisja</option>
                         </select>
 
                         <label for="due-date">due date:</label>
-                        <input type="date" name="due-date">
+                        <input type="date" name="due-date" required>
 
-                        <input type="radio" id="none" name="priority">
+                        <input type="radio" id="0" name="priority" required>
                         <label for="none">no priority</label>
                         
-                        <input type="radio" id="low" name="priority">
+                        <input type="radio" id="1" name="priority" required>
                         <label for="low">low priority</label>
                         
-                        <input type="radio" id="medium" name="priority">
+                        <input type="radio" id="2" name="priority" required>
                         <label for="medium">medium priority</label>
                         
-                        <input type="radio" id="high" name="priority">
+                        <input type="radio" id="3" name="priority" required>
                         <label for="high">high priority</label>
                         
                         <input type="submit" value="Submit">

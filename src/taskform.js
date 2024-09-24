@@ -1,5 +1,7 @@
-import Task from "./task.js";
+import { Task } from "./task.js";
 import { parseISO, formatISO } from "date-fns";
+import { NotebookManager } from "./notebookManager.js";
+import { ListDisplay } from "./listdisplay.js";
 
 class TaskForm {
     static #formdialog = document.querySelector("dialog");
@@ -9,61 +11,63 @@ class TaskForm {
     static #tasknotes = document.querySelector('textarea[name=task-notes]');
     static #tasknotebook = document.querySelector('select[name=notebook-select]');
     static #duedate = document.querySelector('input[name=due-date]');
-    static #noPrior = document.getElementById('none');
-    static #lowPrior = document.getElementById('low');
-    static #medPrior = document.getElementById('medium');
-    static #highPrior = document.getElementById('high');
+    static #noPrior = document.getElementById('0');
+    static #lowPrior = document.getElementById('1');
+    static #medPrior = document.getElementById('2');
+    static #highPrior = document.getElementById('3');
+    static #currentSelectedPrior = document.querySelector('input[name=priority]:checked');
+
     static #submitButton = document.querySelector('input[type=submit]');
 
     static #submitButtonParent;
 
-    static #submitForm(task) {
-        console.log("submitting form");
+    static #submitForm(createMode, opts) {   
+
+        this.#currentSelectedPrior = document.querySelector('input[name=priority]:checked');
+        let ISOtoDate = parseISO(this.#duedate.value);
         
-        const currentSelectedPrior = document.querySelector('input[name=priority]:checked');
-        let priorNumber;
+        if (createMode && opts === undefined) {
+        
+            const assignedNotebook = NotebookManager.getNotebook(this.#tasknotebook.value);
+    
+            assignedNotebook.addTask(
+                new Task(
+                    this.#tasktitle.value, 
+                    this.#tasknotes.value, 
+                    ISOtoDate, 
+                    this.#currentSelectedPrior.id, 
+                    this.#tasknotebook.value
+                    )
+                );
 
-        switch(currentSelectedPrior) {
-            case this.#noPrior:
-                priorNumber = 0;
-                break;
+        } else if (!createMode && opts.task !== undefined) {
+            opts.task.setEditableProperties(
+                this.#tasktitle.value, 
+                this.#tasknotes.value, 
+                ISOtoDate, 
+                this.#currentSelectedPrior.id, 
+                this.#tasknotebook.value);
 
-            case this.#lowPrior:
-                priorNumber = 1;
-                break;
+        } else if (createMode && opts !== undefined) {
+            alert('remove task argument from function'); 
 
-            case this.#medPrior:
-                priorNumber = 2;
-                break;
-
-            case this.#highPrior:
-                priorNumber = 3;
-                break;
+        } else if (!createMode && opts === undefined) {
+            alert('add task argument to function');
         }
-
-        task.setEditableProperties(
-            this.#tasktitle.value, 
-            this.#tasknotes.value, 
-            parseISO(this.#duedate.value), 
-            priorNumber, 
-            this.#tasknotebook.value);
+        
         this.#formdialog.close();
+        ListDisplay.displayCurrentTasklist();
     }
 
-    static #createTask() {
-        console.log("creating task");
-        this.#formdialog.close();
-    }
-
-    static openFormExistingTask(task) {
+    static openFormExistingTask(currentTask) {
         this.#setupForm();
 
-        this.#tasktitle.value = task.title;
-        this.#tasknotes.value = task.description;
-        this.#tasknotebook.value = task.notebook;
-        this.#duedate.value = formatISO(task.dueDate, { representation: 'date'});
+        this.#tasktitle.value = currentTask.title;
+        this.#tasknotes.value = currentTask.description;
+        this.#tasknotebook.value = currentTask.notebook;
+        this.#duedate.value = formatISO(currentTask.dueDate, { representation: 'date'});
 
-        switch(task.priority) {
+        switch(currentTask.priority) {
             case 0:
                 this.#noPrior.checked = true;
                 break;
@@ -80,13 +84,24 @@ class TaskForm {
                 this.#highPrior.checked = true;
                 break;
         }   
+        
 
         this.#submitButton = document.createElement("input");
         this.#submitButton.setAttribute("type", "submit");
         this.#submitButton.value = "Submit";
         this.#submitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            this.#submitForm(task);
+            if (this.#taskform.checkValidity()) {
+                if (this.#tasknotebook.checkValidity()) {
+                    this.#submitForm(false, {task: currentTask});
+                } else {
+                    this.#tasknotebook.reportValidity();
+                }
+                
+            } else {
+                this.#taskform.reportValidity();
+            }
+  
         });
 
         this.#submitButtonParent.appendChild(this.#submitButton);
@@ -104,15 +119,25 @@ class TaskForm {
         this.#submitButton.value = "Create";
         this.#submitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            this.#createTask();
+            if (this.#taskform.checkValidity()) {
+                if (this.#tasknotebook.checkValidity()) {
+                    this.#submitForm(true);
+                } else {
+                    this.#tasknotebook.reportValidity();
+                }
+                
+            } else {
+                this.#taskform.reportValidity();
+            }
+            
         });
         this.#submitButtonParent.appendChild(this.#submitButton);
 
-
-
-        // trying to make it possible for the form to display
-        // through the add task button
-        // make form work whenever you edit a task or create a new one
+        // working on creating a new task
+        // make sure to validate the form before a user can submit
+        // for each missing thing add a message to the label of what to add
+        // turn fields red for missing inputs
+        // add this functionality for when the user edits an existing task as well
     }
 
     static #setupForm() {
