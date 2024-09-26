@@ -33,7 +33,7 @@ div.nav {
     width: max(15%, 100px);
 }
 
-div.task-nav, div.notebook-nav {
+div.task-nav, div.notebooks {
     display: flex;
     flex-direction: column;
 }

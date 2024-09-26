@@ -26,8 +26,6 @@ class TaskForm {
         this.#currentSelectedPrior = document.querySelector('input[name=priority]:checked');
         let ISOtoDate = parseISO(this.#duedate.value);
         const assignedNotebook = NotebookManager.getNotebooks().at(this.#tasknotebook.value);
-
-        console.log(opts['task'].title + ': ' + opts['task'].priority);
         
         if (createMode && opts === undefined) {
     
