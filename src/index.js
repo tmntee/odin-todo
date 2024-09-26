@@ -1,20 +1,17 @@
 import "./style.css";
-import { Task } from "./task.js";
-import { TaskList } from "./tasklist.js";
+import { Notebook } from "./notebook.js";
 import { ListDisplay } from "./listdisplay.js";
 import { NotebookManager } from "./notebookManager.js";
+import { NotebookNavDisplay } from "./notebookNavDisplay.js";
 
-let todayTaskList = new TaskList("Today");
-NotebookManager.addNotebook(todayTaskList);
-let shoesTask = new Task("buy shoes", "i need shoes", new Date(2024, 11, 14), 2,  todayTaskList.title);
-todayTaskList.addTask(shoesTask);
+let defaultNotebook = new Notebook("bombaclaat");
+NotebookManager.addNotebook(defaultNotebook);
 
-let chapstickTask = new Task("buy chapstick", "vaseline", new Date(2024, 8, 10), 0, todayTaskList.title);
-todayTaskList.addTask(chapstickTask);
+defaultNotebook.createTask("buy shoes", "i need shoes", new Date(2024, 11, 14), 2);
+defaultNotebook.createTask("buy chapstick", "vaseline", new Date(2024, 8, 10), 0);
+defaultNotebook.createTask("bombaclaat", "idk", new Date(2022, 11, 14), 3);
 
-let bombaclaat = new Task("bombaclaat", "idk", new Date(2022, 11, 14), 3, todayTaskList.title);
-todayTaskList.addTask(bombaclaat);
+ListDisplay.assignNotebook(defaultNotebook);
+ListDisplay.displayCurrentNotebook();
 
-ListDisplay.assignTasklist(todayTaskList);
-
-ListDisplay.displayCurrentTasklist();
+NotebookManager.addNotebook(new Notebook('madagascar'));

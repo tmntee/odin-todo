@@ -2,6 +2,7 @@ import { Task } from "./task.js";
 import { parseISO, formatISO } from "date-fns";
 import { NotebookManager } from "./notebookManager.js";
 import { ListDisplay } from "./listdisplay.js";
+import { Notebook } from "./notebook.js";
 
 class TaskForm {
     static #formdialog = document.querySelector("dialog");
@@ -21,32 +22,51 @@ class TaskForm {
 
     static #submitButtonParent;
 
-    static #submitForm(createMode, opts) {   
-
+    static #submitForm(createMode, opts) {  
         this.#currentSelectedPrior = document.querySelector('input[name=priority]:checked');
         let ISOtoDate = parseISO(this.#duedate.value);
+        const assignedNotebook = NotebookManager.getNotebooks().at(this.#tasknotebook.value);
+
+        console.log(opts['task'].title + ': ' + opts['task'].priority);
         
         if (createMode && opts === undefined) {
-        
-            const assignedNotebook = NotebookManager.getNotebook(this.#tasknotebook.value);
     
-            assignedNotebook.addTask(
-                new Task(
-                    this.#tasktitle.value, 
-                    this.#tasknotes.value, 
-                    ISOtoDate, 
-                    this.#currentSelectedPrior.id, 
-                    this.#tasknotebook.value
-                    )
-                );
-
-        } else if (!createMode && opts.task !== undefined) {
-            opts.task.setEditableProperties(
+            assignedNotebook.createTask(
                 this.#tasktitle.value, 
                 this.#tasknotes.value, 
                 ISOtoDate, 
-                this.#currentSelectedPrior.id, 
-                this.#tasknotebook.value);
+                Number(this.#currentSelectedPrior.id));
+                
+                console.log('making new task');
+
+        } else if (!createMode && opts.task !== undefined) {
+
+            if (assignedNotebook === opts['task'].notebook) {
+
+                console.log(this.#currentSelectedPrior.id);
+
+                assignedNotebook.editTask(
+                    opts['task'],
+                    this.#tasktitle.value, 
+                    this.#tasknotes.value, 
+                    ISOtoDate, 
+                    Number(this.#currentSelectedPrior.id));
+
+                    console.log('editing task');
+
+
+            } else {
+                assignedNotebook.createTask(
+                    this.#tasktitle.value, 
+                    this.#tasknotes.value, 
+                    ISOtoDate, 
+                    Number(this.#currentSelectedPrior.id));
+
+                opts['task'].notebook.removeTask(opts['task']);
+
+                console.log('switching notebooks');
+
+            }
 
         } else if (createMode && opts !== undefined) {
             alert('remove task argument from function'); 
@@ -56,7 +76,7 @@ class TaskForm {
         }
         
         this.#formdialog.close();
-        ListDisplay.displayCurrentTasklist();
+        ListDisplay.displayCurrentNotebook();
     }
 
     static openFormExistingTask(currentTask) {
@@ -64,7 +84,13 @@ class TaskForm {
 
         this.#tasktitle.value = currentTask.title;
         this.#tasknotes.value = currentTask.description;
-        this.#tasknotebook.value = currentTask.notebook;
+
+        for (let i = 0; i < NotebookManager.getNotebooks().length; i++) {
+            if (NotebookManager.getNotebooks().at(i) === currentTask.notebook) {
+                this.#tasknotebook.value = i;
+            }
+        }
+
         this.#duedate.value = formatISO(currentTask.dueDate, { representation: 'date'});
 
         switch(currentTask.priority) {
@@ -155,32 +181,29 @@ class TaskForm {
     }
 
     static #clearNotebookOpts() {
-        let optsArray = Array.from(this.#tasknotebook.childNodes);
+        console.log('clearing options');
 
-        while (optsArray > 1) {
-            this.#tasknotebook.removeChild(this.#tasknotebook.lastChild);
+        while (this.#tasknotebook.firstChild) {
+            this.#tasknotebook.removeChild(this.#tasknotebook.firstChild);
         }
     }
 
     static #loadNotebookOpts() {
         this.#clearNotebookOpts();
 
-        NotebookManager.getNotebookTitles().forEach((title) => {
+        let defaultOption = document.createElement("option");
+        defaultOption.value = '';
+        defaultOption.textContent = "Select a notebook";
+        this.#tasknotebook.appendChild(defaultOption);
+
+        for (let i = 0; i < NotebookManager.getNotebookTitles().length; i++) {
             let tempOpt = document.createElement("option");
-            tempOpt.value = title;
-            tempOpt.textContent = title;
+            tempOpt.textContent = NotebookManager.getNotebookTitles().at(i);
+            tempOpt.value = i;
             this.#tasknotebook.appendChild(tempOpt);
-        })
-
-        let optsArray = Array.from(this.#tasknotebook.childNodes);
-        console.log(optsArray);
-
-        let matchingOpt = optsArray.find((node) => {
-            node.value = ListDisplay.getTitleOfCurrentList();
-        })
-
-        if (matchingOpt !== undefined) {
-            matchingOpt.setAttribute("selected");
+            if (NotebookManager.getNotebooks().at(i) === ListDisplay.getCurrentNotebook()) {
+                tempOpt.setAttribute("selected","");
+            }
         }
     }
 }

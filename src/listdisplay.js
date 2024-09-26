@@ -27,7 +27,7 @@ class ListDisplay {
         deleteBtn.appendChild(deleteIcon);
         deleteBtn.addEventListener("click", () => {
             this.#currentListBeingDisplayed.removeTask(task);
-            this.displayCurrentTasklist();
+            this.displayCurrentNotebook();
         })
         taskActions.appendChild(deleteBtn);
 
@@ -57,7 +57,7 @@ class ListDisplay {
             } else {
                 task.setPinned(true);
             }
-            this.displayCurrentTasklist();
+            this.displayCurrentNotebook();
         });
         taskActions.appendChild(pinBtn);
 
@@ -91,7 +91,7 @@ class ListDisplay {
             } else {
                 task.setCompleted(false);
             }
-            this.displayCurrentTasklist();
+            this.displayCurrentNotebook();
         })
 
         let taskTitle = document.createElement("h1");
@@ -124,24 +124,25 @@ class ListDisplay {
         let taskHeader2 = document.createElement("div");
         taskHeader2.classList.add("due-date");
 
-        let priority = document.createElement("p");
-        priority.classList.add("priority");
+        let prior = document.createElement("p");
+        prior.classList.add("priority");
+
         switch (task.priority) {
             case 0: 
-                priority.textContent = "";
+                prior.textContent = "";
                 break;
 
             case 1:
-                priority.textContent = "!";
+                prior.textContent = "!";
                 break;
 
             case 2: 
-                priority.textContent = "!!";
+                prior.textContent = "!!";
                 break;
 
             case 3:
-                priority.textContent = "!!!";
-
+                prior.textContent = "!!!";
+                break;
         }
 
         let date = document.createElement("h1");
@@ -155,9 +156,9 @@ class ListDisplay {
 
         let notebookName = document.createElement("p");
         notebookName.classList.add("notebook-name");
-        notebookName.textContent = task.notebook;
+        notebookName.textContent = task.notebook.title;
 
-        taskHeader2.appendChild(priority);
+        taskHeader2.appendChild(prior);
         taskHeader2.appendChild(date);
         taskHeader2.appendChild(notebookName);
 
@@ -179,11 +180,11 @@ class ListDisplay {
         return taskElement;
     }
 
-    static assignTasklist(tasklist) {
-        this.#currentListBeingDisplayed = tasklist;
+    static assignNotebook(nb) {
+        this.#currentListBeingDisplayed = nb;
     }
     
-    static displayCurrentTasklist() {
+    static displayCurrentNotebook() {
         this.clearDisplay();
         let completedTasks = [];
 
@@ -219,11 +220,14 @@ class ListDisplay {
         while(this.tasklistDiv.firstChild) {
             this.tasklistDiv.removeChild(this.tasklistDiv.firstChild);
         }
-        console.log("clearing");
     }
 
     static getTitleOfCurrentList() {
         return this.#currentListBeingDisplayed.title;
+    }
+
+    static getCurrentNotebook() {
+        return this.#currentListBeingDisplayed;
     }
 }
 
