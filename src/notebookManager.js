@@ -1,4 +1,6 @@
 import { ListDisplay } from './listdisplay';
+import { isSameWeek, isToday, isSameMonth, isPast } from "date-fns";
+import { Notebook } from './notebook';
 
 class NotebookManager {
     static #notebookList = [];
@@ -6,12 +8,6 @@ class NotebookManager {
     static addNotebook(notebook) {
         this.#notebookList.push(notebook);
     }
-
-    // somehow make delete/edit tasklist buttons have associated ids to the tasklist id so if two notebooks were to have the same name
-    // the notebook manager would delete the right one. 
-
-    // also notebook manager should not be handing out notebooks all willy nilly
-    // so find a way to refactor that
 
     // you also need to create a add and edit notebook form/modal
     // also need to make it when you click to preset buttons on the top that the list display generates
@@ -34,12 +30,65 @@ class NotebookManager {
     }
 
     static passNotebookToListDisplay(notebook) {
-        try {
+
             ListDisplay.assignNotebook(notebook);
             ListDisplay.displayCurrentNotebook();
-        } catch {
-            alert('error');
+        
+    }
+
+    static #getAllTasks() {
+        let master_notebook = [];
+
+        this.#notebookList.forEach((notebook) => {
+            notebook.tasks.forEach((task) => {
+                master_notebook.push(task);
+            })
+        })
+
+        return master_notebook;
+    }
+
+    static generateNotebook(type) {
+        let generatedNb = new Notebook("generated");
+
+        switch(type) {
+            case "TODAY":
+                generatedNb.tasks = this.#getAllTasks().filter((task) => {
+                    return isToday(task.dueDate);
+                })
+                break;
+
+            case "THIS_WEEK":
+                generatedNb.tasks = this.#getAllTasks().filter((task) => {
+                    return isSameWeek(task.dueDate);
+                })
+                break;
+
+            case "THIS_MONTH":
+                generatedNb.tasks = this.#getAllTasks().filter((task) => {
+                    return isSameMonth(task.dueDate);
+                })
+                break;
+
+            case "OVERDUE":
+                generatedNb.tasks = this.#getAllTasks().filter((task) => {
+                    return isPast(task.dueDate);
+                })
+                break;
+
+            case "PINNED":
+                generatedNb.tasks = this.#getAllTasks().filter((task) => {
+                    return task.getPinned();
+                })
+                break;
+
+            case "ALL":
+                generatedNb.tasks = this.#getAllTasks();
+                break;
         }
+
+        console.log(generatedNb);
+        this.passNotebookToListDisplay(generatedNb);
     }
 }
 

@@ -17,3 +17,4 @@ ListDisplay.displayCurrentNotebook();
 NotebookManager.addNotebook(new Notebook('madagascar'));
 
 NotebookNavDisplay.displayNotebookOpts();
+NotebookNavDisplay.loadButtons();

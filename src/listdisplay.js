@@ -188,6 +188,8 @@ class ListDisplay {
         this.clearDisplay();
         let completedTasks = [];
 
+        
+
         this.#currentListBeingDisplayed.tasks.forEach((task) => {
             if (task.getPinned() === true) {
                 this.pinnedTasklistDiv.appendChild(this.createTaskElement(task));

@@ -3,6 +3,7 @@ import { Notebook } from "./notebook.js";
 
 class NotebookNavDisplay {
     static #notebookDiv = document.querySelector("div.notebooks");
+    static #genNbBtns = document.querySelectorAll("button.genNbs");
 
     static displayNotebookOpts() {
         while (this.#notebookDiv.firstChild) {
@@ -72,6 +73,16 @@ class NotebookNavDisplay {
         smallForm.appendChild(cancelBtn);    
         
         this.#notebookDiv.appendChild(smallForm);
+    }
+
+    static loadButtons() {
+        let btnArray = Array.from(this.#genNbBtns);
+
+        btnArray.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                NotebookManager.generateNotebook(btn.value);
+            })
+        })
     }
 }
 
