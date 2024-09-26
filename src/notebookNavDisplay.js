@@ -14,8 +14,30 @@ class NotebookNavDisplay {
         let notebookOpts = NotebookManager.getNotebooks();
 
         notebookOpts.forEach((nb) => {
-            let tempOpt = this.#createNotebookButton(nb);
-            this.#notebookDiv.appendChild(tempOpt);
+            let notebookOptRow = document.createElement("div");
+            notebookOptRow.classList.add("notebook-row");
+
+            let notebookBtn = document.createElement("button");
+            notebookBtn.textContent = nb.title;
+            notebookBtn.value = NotebookManager.getNotebooks().findIndex((notebook) => { return notebook === nb });
+
+            notebookBtn.addEventListener('click', () => {
+                NotebookManager.passNotebookToListDisplay(nb);
+            })
+
+            let deleteNbBtn = document.createElement("button");
+            deleteNbBtn.textContent = "Delete";
+            deleteNbBtn.addEventListener("click", () => {
+                if (confirm('Are you sure? You will delete all of the tasks in this notebook.')) {
+                    this.#notebookDiv.removeChild(notebookOptRow);
+                    NotebookManager.removeNotebook(notebookBtn.value);
+                }
+            });
+
+            notebookOptRow.appendChild(deleteNbBtn);
+            notebookOptRow.appendChild(notebookBtn);
+
+            this.#notebookDiv.appendChild(notebookOptRow);
         })
 
         let addNotebookBtn = document.createElement('button');
@@ -28,18 +50,6 @@ class NotebookNavDisplay {
         })
 
         this.#notebookDiv.appendChild(addNotebookBtn);
-    }
-
-    static #createNotebookButton(notebook) {
-        let notebookBtn = document.createElement("button");
-        notebookBtn.textContent = notebook.title;
-        notebookBtn.value = NotebookManager.getNotebooks().findIndex((nb) => { return nb === notebook });
-
-        notebookBtn.addEventListener('click', () => {
-            NotebookManager.passNotebookToListDisplay(notebook);
-        })
-
-        return notebookBtn;
     }
 
     static #newNotebookField() {

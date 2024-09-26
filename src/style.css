@@ -38,6 +38,11 @@ div.task-nav, div.notebooks {
     flex-direction: column;
 }
 
+div.notebook-row {
+    display: flex;
+    align-self: center;
+}
+
 div.task-wrapper {
     border-top-left-radius: 25px;
     width: 100%;

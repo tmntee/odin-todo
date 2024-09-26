@@ -9,6 +9,10 @@ class NotebookManager {
         this.#notebookList.push(notebook);
     }
 
+    static removeNotebook(index) {
+        this.#notebookList.splice(index, 1);
+    }
+
     // you also need to create a add and edit notebook form/modal
     // also need to make it when you click to preset buttons on the top that the list display generates
     // custom notebook and displays them based off ALL task due dates/pin statuses
